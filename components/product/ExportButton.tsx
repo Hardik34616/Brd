@@ -1,0 +1,4 @@
+"use client";
+import { useState } from "react";
+import { ArrowDownToLine, Check, LoaderCircle } from "lucide-react";
+export default function ExportButton() { const [state, setState] = useState<"idle" | "loading" | "ready">("idle"); const prepare = () => { setState("loading"); setTimeout(() => setState("ready"), 900); }; return <div className="export-wrap"><button className="export-button" onClick={prepare} disabled={state === "loading"}>{state === "loading" ? <LoaderCircle className="spin" size={15} /> : state === "ready" ? <Check size={15} /> : <ArrowDownToLine size={15} />}{state === "idle" ? "Export" : state === "loading" ? "Preparing..." : "Export ready"}<span>⌄</span></button>{state === "ready" && <div className="export-popover"><strong>BRD ready for export</strong><button onClick={() => setState("idle")}>Download PDF</button><button onClick={() => setState("idle")}>Download DOCX</button></div>}</div>; }

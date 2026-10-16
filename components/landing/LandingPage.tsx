@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowDownToLine, X } from "lucide-react";
 import MotionProvider from "../animations/MotionProvider";
 import Navbar from "./Navbar";
@@ -28,6 +29,7 @@ const info: Record<string, { title: string; body: string }> = {
   },
 };
 export default function LandingPage() {
+  const router = useRouter();
   const [modal, setModal] = useState<string | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
@@ -35,9 +37,8 @@ export default function LandingPage() {
     else dialog.current?.close();
   }, [modal]);
   const start = () => {
-    const route = process.env.NEXT_PUBLIC_APP_URL;
-    if (route) window.location.assign(route);
-    else setModal("start");
+    // Keep this isolated so authentication can replace the destination later.
+    router.push("/dashboard");
   };
   return (
     <MotionProvider>
