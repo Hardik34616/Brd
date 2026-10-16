@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowDownToLine, X } from "lucide-react";
 import MotionProvider from "../animations/MotionProvider";
 import Navbar from "./Navbar";
@@ -27,7 +28,9 @@ const info: Record<string, { title: string; body: string }> = {
     body: "A public contact channel has not been announced yet. In the meantime, explore the interactive story or download the sample BRD to share with your team.",
   },
 };
+
 export default function LandingPage() {
+  const router = useRouter();
   const [modal, setModal] = useState<string | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
@@ -35,9 +38,7 @@ export default function LandingPage() {
     else dialog.current?.close();
   }, [modal]);
   const start = () => {
-    const route = process.env.NEXT_PUBLIC_APP_URL;
-    if (route) window.location.assign(route);
-    else setModal("start");
+    router.push("/login");
   };
   return (
     <MotionProvider>
