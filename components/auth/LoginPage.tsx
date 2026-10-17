@@ -66,12 +66,12 @@ export default function LoginPage() {
     setError(null);
 
     // Validation
-    if (!email || !email.includes("@") || !email.includes(".")) {
-      setError("Please enter a valid work email address.");
+    if (!email.trim()) {
+      setError("Please enter an email address.");
       return;
     }
-    if (mode !== "forgot" && (!password || password.length < 6)) {
-      setError("Password must be at least 6 characters long.");
+    if (mode !== "forgot" && !password) {
+      setError("Please enter a password.");
       return;
     }
     if (mode === "register" && !name.trim()) {
@@ -85,15 +85,14 @@ export default function LoginPage() {
 
     setLoading(true);
 
-    // Simulate authentication delay
+    // Demo authentication: any non-empty email and password can enter the workspace.
     setTimeout(() => {
       setLoading(false);
       if (mode === "forgot") {
         setSuccessDialog(`Password reset instructions have been sent to ${email}. Check your inbox!`);
-      } else if (mode === "register") {
-        setSuccessDialog(`Welcome to Bhasha BRD, ${name}! Your account has been created.`);
       } else {
-        setSuccessDialog(`Welcome back! You are now logged in as ${email}.`);
+        window.localStorage.setItem("bhasha-demo-email", email);
+        router.push("/dashboard");
       }
     }, 900);
   };
@@ -101,10 +100,8 @@ export default function LoginPage() {
   const handleGoogleLogin = () => {
     setLoading(true);
     setError(null);
-    setTimeout(() => {
-      setLoading(false);
-      setSuccessDialog("Successfully connected via Google! Welcome to Bhasha BRD.");
-    }, 800);
+    window.localStorage.setItem("bhasha-demo-email", "demo@bhasha.app");
+    router.push("/dashboard");
   };
 
   return (

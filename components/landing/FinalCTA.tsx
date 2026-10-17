@@ -61,7 +61,7 @@ export default function FinalCTA({
               </button>
             ))}
           </div>
-          <span>Bhasha BRD · Product preview</span>
+          <span>Bhasha BRD · Product prototype</span>
         </div>
       </footer>
     </>
